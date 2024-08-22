@@ -60,6 +60,18 @@ function activateSaveListeners(){
     })
 }
 
+function activateCancelListeners(){
+    const cancelBtn = document.querySelectorAll(".cancelBtn")
+    const updateController = document.querySelectorAll(".update-controller")
+    const inputs = document.querySelectorAll(".input-controller textarea")
+    cancelBtn.forEach((cb, i) => {
+        cb.addEventListener("click", () => {
+            updateController[i].style.display = "none"
+            inputs[i].disabled = true
+        })
+    })
+}
+
 function updateItem(text, i){
     itemsArray[i] = text
     localStorage.setItem("items", JSON.stringify(itemsArray))
