@@ -1,11 +1,23 @@
-const itemsArray = localStorage.getItem("items") ? JSON.parse(localStorage.getItem("items")) : []
-
-console.log(itemsArray)
+const itemsArray = localStorage.getItem("items") ? JSON.parse(localStorage.getItem("items")) : [];
 
 document.querySelector("#enter").addEventListener("click", () => {
     const item = document.querySelector("#item")
     createItem(item)
 })
+
+document.querySelector("#item").addEventListener("keypress", (e) => {
+    if(e.key == "Enter"){
+        const item = document.querySelector("#item")
+        createItem(item)
+    }
+})
+
+function displayDate(){
+    let date = new Date()
+    date = date.toString().split(" ")
+    date = date[1] + " " + date[2] + " " + date[3]
+    document.querySelector("#date").innerHTML = date
+}
 
 function displayItems(){
     let items = ""
@@ -68,12 +80,13 @@ function activateCancelListeners(){
         cb.addEventListener("click", () => {
             updateController[i].style.display = "none"
             inputs[i].disabled = true
+            inputs.style.border = "none"
         })
     })
 }
 
-function updateItem(text, i){
-    itemsArray[i] = text
+function createItem(item){
+    itemsArray.push(item.value)
     localStorage.setItem("items", JSON.stringify(itemsArray))
     location.reload()
 }
@@ -84,16 +97,10 @@ function deleteItem(i){
     location.reload()
 }
 
-function createItem(item){
-    itemsArray.push(item.value)
+function updateItem(text, i){
+    itemsArray[i] = text
     localStorage.setItem("items", JSON.stringify(itemsArray))
     location.reload()
-}
-
-function displayDate(){
-    let date = new Date()
-    date = date.toString().split(" ")
-    document.querySelector("#date").innerHTML = date[1] + " " + date[2] + " " + date[3]
 }
 
 window.onload = function(){
